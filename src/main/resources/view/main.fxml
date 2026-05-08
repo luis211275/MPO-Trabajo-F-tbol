@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      stylesheets="/styles/Main.css"
+      fx:controller="org.example.controller.JugadorController"
+      spacing="10"
+      alignment="CENTER"
+      styleClass="container">
+
+
+    <TextField fx:id="txtNombre" promptText="Nombre"/>
+    <TextField fx:id="txtApellido" promptText="Apellido"/>
+    <TextField fx:id="txtGoles" promptText="Goles"/>
+    <TextField fx:id="txtAsistencias" promptText="Asistencias"/>
+
+
+    <Button text="Enviar" onAction="#sendData"/>
+
+
+    <TableView fx:id="tablaJugador" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colNombre" text="Nombre"/>
+            <TableColumn fx:id="colApellido" text="Apellido"/>
+            <TableColumn fx:id="colGoles" text="Goles"/>
+            <TableColumn fx:id="colAsistencias" text="Asistencias"/>
+        </columns>
+    </TableView>
+
+</VBox>
