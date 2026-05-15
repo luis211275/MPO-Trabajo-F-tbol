@@ -14,7 +14,6 @@ import org.example.service.JugadorService;
 
 public class JugadorController {
 
-    // Vincular con los fx:id de tu FXML
     @FXML private TextField txtNombre;
     @FXML private TextField txtApellido;
     @FXML private TextField txtGoles;
@@ -29,19 +28,16 @@ public class JugadorController {
     private JugadorService jugadorService;
     private ObservableList<Jugador> listaJugadores;
 
-    // Se ejecuta automáticamente al cargar el FXML
     @FXML
     public void initialize() {
         jugadorService = new JugadorService();
         listaJugadores = FXCollections.observableArrayList();
 
-        // Configurar cómo las columnas leen los datos de la clase Jugador
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colApellido.setCellValueFactory(new PropertyValueFactory<>("apellido"));
         colGoles.setCellValueFactory(new PropertyValueFactory<>("goles"));
         colAsistencias.setCellValueFactory(new PropertyValueFactory<>("asistencias"));
 
-        // Cargar los datos iniciales de la base de datos
         cargarDatosTabla();
 
 
@@ -50,10 +46,8 @@ public class JugadorController {
 
 
     private void prefWidthColumns() {
-        // Activamos la política para que no cree columnas vacías al final
         tablaJugador.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
-        // Multiplicamos por el porcentaje decimal que queremos (0.35 = 35%, 0.15 = 15%)
         colNombre.prefWidthProperty().bind(tablaJugador.widthProperty().multiply(0.35));
         colApellido.prefWidthProperty().bind(tablaJugador.widthProperty().multiply(0.35));
         colGoles.prefWidthProperty().bind(tablaJugador.widthProperty().multiply(0.15));
@@ -64,19 +58,15 @@ public class JugadorController {
     @FXML
     public void sendData() {
         try {
-            // 1. Obtener datos de la interfaz
             String nombre = txtNombre.getText();
             String apellido = txtApellido.getText();
             int goles = Integer.parseInt(txtGoles.getText());
             int asistencias = Integer.parseInt(txtAsistencias.getText());
 
-            // 2. Crear objeto Jugador
             Jugador nuevoJugador = new Jugador(nombre, apellido, goles, asistencias);
 
-            // 3. Mandarlo a la base de datos a través del servicio
             jugadorService.agregarJugador(nuevoJugador);
 
-            // 4. Limpiar campos y recargar la tabla
             limpiarCampos();
             cargarDatosTabla();
 
