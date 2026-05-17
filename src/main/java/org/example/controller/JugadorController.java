@@ -3,6 +3,7 @@ package org.example.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -102,5 +103,31 @@ public class JugadorController {
         alert.setHeaderText(null);
         alert.setContentText(contenido);
         alert.showAndWait();
+    }
+
+
+
+    @FXML
+    private void mostrarLogin() {
+        cargarModal("/view/login.fxml", "Inicio de Sesión"); // Cambia /view/ por tu ruta si es distinta (ej: /html/)
+    }
+
+    @FXML
+    private void mostrarRegister() {
+        cargarModal("/view/register.fxml", "Registro de Usuario");
+    }
+
+    private void cargarModal(String ruta, String titulo) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(ruta));
+            javafx.scene.Parent root = loader.load();
+            javafx.stage.Stage stage = new javafx.stage.Stage();
+            stage.setTitle(titulo);
+            stage.setScene(new javafx.scene.Scene(root));
+            stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
+            stage.show();
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,3 +1,39 @@
+/* --- BARRA SUPERIOR DE NAVEGACIÓN --- */
+.hbox-navegacion {
+    -fx-background-color: #2c3e50;
+    -fx-padding: 12px 20px;
+    -fx-alignment: center-right;
+    -fx-spacing: 12px;
+}
+
+/* --- ESTILO BASE PARA LOS BOTONES --- */
+.btn-nav {
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+/* Botón Iniciar Sesión (Azul) */
+.btn-login {
+    -fx-background-color: #007bff;
+}
+.btn-login:hover {
+    -fx-background-color: #0056b3;
+}
+
+/* Botón Registrarse (Verde) */
+.btn-register {
+    -fx-background-color: #28a745;
+}
+.btn-register:hover {
+    -fx-background-color: #218838;
+}
+
+
 /* Paleta de colores principales y fondo de la aplicación */
 .root {
     -fx-background-color: #1e222b;

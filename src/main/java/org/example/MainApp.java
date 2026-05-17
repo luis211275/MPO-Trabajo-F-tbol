@@ -6,31 +6,31 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class MainApp extends Application {
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage primaryStage) {
         try {
-            // CAMBIA "vista_jugador.fxml" por el nombre real de tu archivo FXML
-            // Recuerda que este archivo debe estar en la carpeta: src/main/resources/org/example/
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main.fxml"));            Parent root = loader.load();
+            // 1. Cargamos el archivo FXML principal (el catálogo/home)
+            // Asegúrate de escribir la ruta exacta donde guardaste tu home.fxml o main.fxml
+            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/view/main.fxml"));            Parent root = loader.load();
 
-            // Creamos la escena y le asignamos un tamaño a la ventana (Ancho x Alto)
-            Scene scene = new Scene(root, 700, 550);
+            // 2. Creamos la escena con el diseño cargado
+            Scene scene = new Scene(root, 1024, 768); // Puedes ajustar el ancho y alto aquí
 
-            stage.setTitle("Gestión de Jugadores - Trabajo Fútbol");
-            stage.setScene(scene);
-            stage.show();
+            // 3. Configuramos la ventana principal
+            primaryStage.setTitle("Catálogo de Compra-Venta de Coches");
+            primaryStage.setScene(scene);
+            primaryStage.show();
 
-        } catch (IOException e) {
-            System.out.println("Error al cargar el archivo FXML. Revisa la ruta y los nombres.");
+        } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Error crítico al arrancar la aplicación principal.");
         }
     }
 
     public static void main(String[] args) {
+        // Lanzamos la aplicación JavaFX
         launch(args);
     }
 }
