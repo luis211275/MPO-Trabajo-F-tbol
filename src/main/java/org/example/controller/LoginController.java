@@ -2,9 +2,14 @@ package org.example.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.example.model.Usuario;
 import org.example.service.LoginService;
 import org.example.exceptions.UsuarioException;
@@ -18,43 +23,52 @@ public class LoginController {
     private LoginService loginService = new LoginService();
 
     @FXML
-    private void handleLogin() {
-        String correo = txtCorreo.getText().trim();
-        String contrasenia = txtContrasenia.getText();
-
+    private void handleLogin(javafx.event.ActionEvent event) {
         try {
-            // Intentamos loguear al usuario
-            Usuario usuarioLogueado = loginService.autenticarUsuario(correo, contrasenia);
+            // 1. Validamos las credenciales con el servicio y la base de datos
+            Usuario user = loginService.autenticarUsuario(txtCorreo.getText().trim(), txtContrasenia.getText());
 
-            // Si llega aquí, las credenciales son correctas
-            lblMensaje.setStyle("-fx-text-fill: green;");
-            lblMensaje.setText("¡Bienvenido/a, " + usuarioLogueado.getNombre() + "!");
+            // 2. Si es correcto, procedemos a CERRAR la ventana actual de Login directamente
+            Node source = (Node) event.getSource();
+            Stage stageLogin = (Stage) source.getScene().getWindow();
+            stageLogin.close();
 
-            // TODO: Aquí podrías redirigir al usuario a la pantalla principal de tu app (ej: home.html o catálogo)
-            // abrirPantallaPrincipal();
+            // 3. ABRIR la ventana principal (main.fxml)
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main.fxml"));
+                Parent root = loader.load();
+
+                Stage stageMain = new Stage();
+                stageMain.setTitle("Panel Principal - Gestión de Jugadores");
+                stageMain.setScene(new Scene(root));
+                stageMain.show();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Error al abrir la pantalla principal tras el Login.");
+            }
 
         } catch (UsuarioException e) {
-            // Capturamos los errores controlados (Campos vacíos, usuario no encontrado, etc.)
+            // Si las credenciales fallan, mostramos el mensaje de error en la interfaz
             lblMensaje.setStyle("-fx-text-fill: red;");
             lblMensaje.setText(e.getMessage());
         }
     }
 
-
     @FXML
     private void irARegistroDesdeLogin(javafx.event.ActionEvent event) {
         // Cerrar Login actual
-        javafx.scene.Node source = (javafx.scene.Node) event.getSource();
-        javafx.stage.Stage stageActual = (javafx.stage.Stage) source.getScene().getWindow();
+        Node source = (Node) event.getSource();
+        Stage stageActual = (Stage) source.getScene().getWindow();
         stageActual.close();
 
         // Abrir ventana de Registro
         try {
-            javafx.scene.Parent root = FXMLLoader.load(getClass().getResource("/view/register.fxml"));
-            javafx.stage.Stage stage = new javafx.stage.Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/register.fxml"));
+            Stage stage = new Stage();
             stage.setTitle("Registro de Usuario");
-            stage.setScene(new javafx.scene.Scene(root));
-            stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

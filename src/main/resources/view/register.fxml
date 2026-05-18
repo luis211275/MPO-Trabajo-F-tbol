@@ -22,6 +22,6 @@
     <TextField fx:id="txtCorreo" promptText="Correo Electrónico"/>
     <PasswordField fx:id="txtContrasenia" promptText="Contraseña"/>
 
-    <Button text="Registrarse" onAction="#handleRegister" style="-fx-background-color: #28a745; -fx-text-fill: white;"/>
+    <Button text="Registrarse" onAction="#handleRegister" styleClass="btn-submit-reg"/>
     <Label fx:id="lblMensaje" text="" style="-fx-text-fill: red;"/>
 </VBox>
