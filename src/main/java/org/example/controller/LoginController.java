@@ -16,24 +16,36 @@ import org.example.exceptions.UsuarioException;
 
 public class LoginController {
 
+
+    //Datos para poner en el login
     @FXML private TextField txtCorreo;
     @FXML private PasswordField txtContrasenia;
     @FXML private Label lblMensaje;
 
+
+    //llama a la logica de negocio
     private LoginService loginService = new LoginService();
 
+
+    /**
+     * metodo se inicia cuando le das al boton de iniciar sesion
+     *
+     * @param event evento del boton
+     * @exception Exception Error si no puede abrir el main.fxml
+     * @exception UsuarioException Error en la validacion del usuario, ponemos que el mensaje me lo ponga en rojo, cambiando el estilo
+     */
     @FXML
     private void handleLogin(javafx.event.ActionEvent event) {
         try {
-            // 1. Validamos las credenciales con el servicio y la base de datos
+            // Llamamos al service para el metodo de autentificar usuario
             Usuario user = loginService.autenticarUsuario(txtCorreo.getText().trim(), txtContrasenia.getText());
 
-            // 2. Si es correcto, procedemos a CERRAR la ventana actual de Login directamente
+            // 2. Si la autentificacion esta bien, se cierra la escena
             Node source = (Node) event.getSource();
             Stage stageLogin = (Stage) source.getScene().getWindow();
             stageLogin.close();
 
-            // 3. ABRIR la ventana principal (main.fxml)
+            // 3. Abrimos la ventana de main.fxml
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main.fxml"));
                 Parent root = loader.load();
@@ -55,14 +67,21 @@ public class LoginController {
         }
     }
 
+
+    /**
+     * Metodo que me envia al metodo de registro desde el login, haciendo que me cierre el login y me cargue y me entre al regster
+     *
+     * @param event evento del boton
+     * @exception Exception error a la hora de abrir la ventana del registro
+     */
     @FXML
     private void irARegistroDesdeLogin(javafx.event.ActionEvent event) {
-        // Cerrar Login actual
+        // Me va a cerrar el login actual, que es desde donde estoy
         Node source = (Node) event.getSource();
         Stage stageActual = (Stage) source.getScene().getWindow();
         stageActual.close();
 
-        // Abrir ventana de Registro
+        // Me va a abrir la ventana del registro, repetitivo a la anterior
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/register.fxml"));
             Stage stage = new Stage();

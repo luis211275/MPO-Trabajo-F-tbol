@@ -8,10 +8,22 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-// Importa tu clase de conexión aquí (ej: util.ConexionBD)
+
+
 
 public class LoginDAOImpl implements LoginDAO {
 
+
+    /**
+     * Este metodo va a recibir el correo que recibio del login y hara una busqueda con un select,
+     * para mirar los correos registrados, posteriormente buscaremos el correo que queremos encontrar,
+     * hace la consulta, para ver si hay algun correo igual, si no lo hay, dara error de que el correo
+     * escrito esta mal
+     *
+     * @param correo escrito en el input
+     * @return correo recibido, si es correcto
+     * @throws UsuarioException error al consultar en la base de datos
+     */
     @Override
     public Usuario obtenerUsuarioPorCorreo(String correo) throws UsuarioException {
         String sql = "SELECT * FROM USUARIOS WHERE CORREO = ?";
